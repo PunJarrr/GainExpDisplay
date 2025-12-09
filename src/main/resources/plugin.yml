@@ -1,0 +1,5 @@
+name: GainExpDisplay
+version: '2.0.0'
+main: dev.punjarrr.gainExpDisplay.GainExpDisplay
+api-version: '1.19'
+authors: [PunJarrr]

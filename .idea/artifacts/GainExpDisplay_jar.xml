@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GainExpDisplay:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GainExpDisplay_jar</output-path>
+    <root id="archive" name="GainExpDisplay.jar">
+      <element id="module-output" name="GainExpDisplay" />
+    </root>
+  </artifact>
+</component>

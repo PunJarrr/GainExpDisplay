@@ -1,0 +1,3 @@
+messages:
+  gain-xp: '<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold></yellow>'
+  mending-repair: '<aqua><bold>Mending Repair:</bold> <yellow><bold>+%amount%</bold></yellow> <green>(%durability%/%max%)</green>'
