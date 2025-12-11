@@ -1,3 +1,11 @@
-messages:
-  gain-xp: '<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold></yellow>'
-  mending-repair: '<aqua><bold>Mending Repair:</bold> <yellow><bold>+%amount%</bold></yellow> <green>(%durability%/%max%)</green>'
+# GainExpDisplay Configuration
+
+# Display text when gaining experience
+gain-xp:
+  enabled: true
+  message: '<green><bold>Gain XP: <yellow><bold>+%amount%'
+
+# Display text when repairing items with Mending
+mending-repair:
+  enabled: true
+  message: '<aqua><bold>Mending Repair: <yellow><bold>+%amount% <green>(%durability%/%max%)'

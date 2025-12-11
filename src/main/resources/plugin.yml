@@ -1,5 +1,6 @@
 name: GainExpDisplay
-version: '2.0.0'
+version: 2.0.1
 main: dev.punjarrr.gainExpDisplay.GainExpDisplay
-api-version: '1.19'
+api-version: 1.17
 authors: [PunJarrr]
+description: Displays XP gain and Mending repair progress directly in your actionbar.
