@@ -3,4 +3,12 @@ version: 2.0.1
 main: dev.punjarrr.gainExpDisplay.GainExpDisplay
 api-version: 1.17
 authors: [PunJarrr]
-description: Displays XP gain and Mending repair progress directly in your actionbar.
+description: Displays XP gain and Mending repair progress directly in your action bar.
+commands:
+  gainexpdisplay:
+    description: Main command
+    aliases: [ged]
+permissions:
+  gainexpdisplay.reload:
+    description: Allows reloading the plugin
+    default: op

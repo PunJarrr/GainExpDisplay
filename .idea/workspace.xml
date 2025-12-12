@@ -9,11 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45c47b7b-e373-4e9a-b39b-32c70f1e1d13" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/TextUtil.java" afterDir="false" />
+    <list default="true" id="45c47b7b-e373-4e9a-b39b-32c70f1e1d13" name="Changes" comment="- Added 1.17-1.18.x support&#10;- Added new config sections for gaining XP and mending repair toggle">
+      <change afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/executors/CommandExecutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/listeners/Listeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/listeners/Listeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/GainExpDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/GainExpDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/TextUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/TextUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
@@ -33,6 +33,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;PunJarrr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PunJarrr/GainExpDisplay.git&quot;,
+    &quot;accountId&quot;: &quot;74647734-d942-4c57-b659-a25d6ea2d13b&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -47,6 +59,7 @@
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/kotka/Desktop/Project/Minecraft/Plugins/SuperPickaxe&quot;,
@@ -89,5 +102,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- Added 1.17-1.18.x support&#10;- Added new config sections for gaining XP and mending repair toggle" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added 1.17-1.18.x support&#10;- Added new config sections for gaining XP and mending repair toggle" />
   </component>
 </project>

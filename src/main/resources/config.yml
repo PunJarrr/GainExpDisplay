@@ -3,9 +3,14 @@
 # Display text when gaining experience
 gain-xp:
   enabled: true
-  message: '<green><bold>Gain XP: <yellow><bold>+%amount%'
+  message: '<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold>'
 
 # Display text when repairing items with Mending
 mending-repair:
   enabled: true
-  message: '<aqua><bold>Mending Repair: <yellow><bold>+%amount% <green>(%durability%/%max%)'
+  message: '<aqua><bold>Mending Repair:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)'
+
+messages:
+  reload: "<green>Config reloaded!"
+  command-no-permission: "<red>You do not have permission use that command."
+  command-error: "<yellow>Usage: /ged reload"

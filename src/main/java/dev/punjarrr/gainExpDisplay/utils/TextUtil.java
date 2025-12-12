@@ -7,15 +7,17 @@ public class TextUtil {
 
     private static final MiniMessage mm = MiniMessage.miniMessage();
 
-    public static Component parse(String input, int amount) {
+    public static Component parse(String input) {
+        return mm.deserialize(input);
+    }
 
+    public static Component parse(String input, int amount) {
         return mm.deserialize(
                 input.replace("%amount%", String.valueOf(amount))
         );
     }
 
     public static Component parse(String input, int amount, int durability, int maxDurability) {
-
         return mm.deserialize(
                 input
                         .replace("%amount%", String.valueOf(amount))
