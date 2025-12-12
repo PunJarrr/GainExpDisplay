@@ -1,5 +1,5 @@
 name: GainExpDisplay
-version: 2.0.1
+version: 2.0.2
 main: dev.punjarrr.gainExpDisplay.GainExpDisplay
 api-version: 1.17
 authors: [PunJarrr]
