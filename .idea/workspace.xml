@@ -10,12 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="45c47b7b-e373-4e9a-b39b-32c70f1e1d13" name="Changes" comment="- Added config updater&#10;- Fixed language loading problem&#10;- Reworked configuration for better explainations">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/ConfigUpdater.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/GainExpDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/GainExpDisplay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/commands/ged/GedCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/commands/ged/GedCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/LanguageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/punjarrr/gainExpDisplay/utils/LanguageLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
