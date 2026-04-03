@@ -1,16 +1,27 @@
-# GainExpDisplay Configuration
+######################
+#   GainExpDisplay   #
+######################
 
-# Display text when gaining experience
+# Language
+lang: en_US
+
+# Permissions
+
+# When set to true, players require permissions to see the message.
+# See below for a list of permissions.
+require-permission: false
+
+# Permissions for displaying messages:
+#
+#  gainexpdisplay.gainexp - Display text when gaining experience
+#  gainexpdisplay.mending - Display text when repairing items with Mending
+
+# Settings
+
+# When set to true, players will see text when gaining exp.
 gain-xp:
   enabled: true
-  message: '<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold>'
 
-# Display text when repairing items with Mending
+# When set to true, players will see text when repairing items with Mending.
 mending-repair:
   enabled: true
-  message: '<aqua><bold>Mending Repair:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)'
-
-messages:
-  reload: "<green>Config reloaded!"
-  command-no-permission: "<red>You do not have permission use that command."
-  command-error: "<yellow>Usage: /ged reload"

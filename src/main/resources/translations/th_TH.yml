@@ -1,0 +1,17 @@
+# ==================================================
+# ตัวแปร (Placeholders)
+# %amount%      - จำนวน XP ที่ได้รับ
+# %durability%  - ความทนทานปัจจุบันของไอเทมที่ถูกซ่อม
+# %max%         - ความทนทานสูงสุดของไอเทม
+# ==================================================
+
+# ข้อความเมื่อผู้เล่นได้รับ XP
+gain-xp: "<green><bold>ได้รับ XP:</bold> <yellow><bold>+%amount%</bold>"
+
+# ข้อความเมื่อไอเทมถูกซ่อมด้วย Mending
+mending-repair: "<aqua><bold>ซ่อมด้วย Mending:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)"
+
+# ข้อความคำสั่ง
+reload: "<green>รีโหลดการตั้งค่าเรียบร้อยแล้ว"
+command-no-permission: "<red>คุณไม่มีสิทธิ์ใช้คำสั่งนี้"
+command-error: "<yellow>วิธีใช้: /ged reload"

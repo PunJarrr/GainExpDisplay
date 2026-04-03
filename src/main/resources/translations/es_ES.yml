@@ -1,0 +1,17 @@
+# ==================================================
+# Placeholders
+# %amount%      - Cantidad de XP obtenida
+# %durability%  - Durabilidad actual del objeto reparado
+# %max%         - Durabilidad máxima del objeto
+# ==================================================
+
+# Mensaje al ganar experiencia
+gain-xp: "<green><bold>XP obtenida:</bold> <yellow><bold>+%amount%</bold>"
+
+# Mensaje al reparar con Mending
+mending-repair: "<aqua><bold>Reparación con Mending:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)"
+
+# Mensajes de comando
+reload: "<green>Configuración recargada correctamente."
+command-no-permission: "<red>No tienes permiso para usar este comando."
+command-error: "<yellow>Uso: /ged reload"

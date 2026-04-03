@@ -1,0 +1,17 @@
+# ==================================================
+# プレースホルダー
+# %amount%      - 獲得したXP量
+# %durability%  - 修理されたアイテムの現在の耐久値
+# %max%         - アイテムの最大耐久値
+# ==================================================
+
+# XP獲得時のメッセージ
+gain-xp: "<green><bold>XP獲得:</bold> <yellow><bold>+%amount%</bold>"
+
+# Mending修理時のメッセージ
+mending-repair: "<aqua><bold>修繕（Mending）:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)"
+
+# コマンドメッセージ
+reload: "<green>設定を正常に再読み込みしました。"
+command-no-permission: "<red>このコマンドを使用する権限がありません。"
+command-error: "<yellow>使用方法: /ged reload"

@@ -1,0 +1,17 @@
+# ==================================================
+# 占位符
+# %amount%      - 获得的经验值
+# %durability%  - 修复后物品的当前耐久
+# %max%         - 物品的最大耐久
+# ==================================================
+
+# 获得经验时的消息
+gain-xp: "<green><bold>获得经验:</bold> <yellow><bold>+%amount%</bold>"
+
+# Mending修复时的消息
+mending-repair: "<aqua><bold>经验修补:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)"
+
+# 命令消息
+reload: "<green>配置已成功重新加载。"
+command-no-permission: "<red>你没有权限使用此命令。"
+command-error: "<yellow>用法: /ged reload"

@@ -1,0 +1,17 @@
+# ==================================================
+# Placeholders
+# %amount%      - Amount of XP gained
+# %durability%  - Current durability of the repaired item
+# %max%         - Maximum durability of the repaired item
+# ==================================================
+
+# Message displayed when the player gains experience
+gain-xp: "<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold>"
+
+# Message displayed when an item is repaired by Mending
+mending-repair: "<aqua><bold>Mending Repair:</bold> <yellow><bold>+%amount%</bold> <green>(%durability%/%max%)"
+
+# Command feedback messages
+reload: "<green>Configuration reloaded successfully."
+command-no-permission: "<red>You do not have permission to use this command."
+command-error: "<yellow>Usage: /ged reload"

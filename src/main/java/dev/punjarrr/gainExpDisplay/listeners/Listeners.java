@@ -1,5 +1,7 @@
 package dev.punjarrr.gainExpDisplay.listeners;
 
+import dev.punjarrr.gainExpDisplay.GainExpDisplay;
+import dev.punjarrr.gainExpDisplay.utils.LanguageLoader;
 import dev.punjarrr.gainExpDisplay.utils.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,24 +10,28 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerItemMendEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Listeners implements Listener {
 
-    private final JavaPlugin plugin;
+    private final GainExpDisplay plugin;
+    private final LanguageLoader lang;
 
-    public Listeners(JavaPlugin plugin) {
+    public Listeners(GainExpDisplay plugin, LanguageLoader lang) {
         this.plugin = plugin;
+        this.lang = lang;
     }
 
     @EventHandler
     public void onExpChange(PlayerExpChangeEvent e) {
         if (!plugin.getConfig().getBoolean("gain-xp.enabled", true)) return;
+        if (plugin.getConfig().getBoolean("require-permission", true)) {
+            if (!e.getPlayer().hasPermission("gainexpdisplay.gainexp")) return;
+        }
 
         Player player = e.getPlayer();
         int amount = e.getAmount();
 
-        String format = plugin.getConfig().getString("gain-xp.message", "");
+        String format = lang.get("gain-xp");
         if (format.isEmpty()) return;
 
         player.sendActionBar(TextUtil.parse(format, amount));
@@ -34,6 +40,9 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPlayerItemMend(PlayerItemMendEvent e) {
         if (!plugin.getConfig().getBoolean("mending-repair.enabled", true)) return;
+        if (plugin.getConfig().getBoolean("require-permission", true)) {
+            if (!e.getPlayer().hasPermission("gainexpdisplay.gainexp")) return;
+        }
 
         Player player = e.getPlayer();
         int amount = e.getRepairAmount();
@@ -44,7 +53,7 @@ public class Listeners implements Listener {
         int maxDurability = item.getType().getMaxDurability();
         int durability = maxDurability - damageable.getDamage() + amount;
 
-        String format = plugin.getConfig().getString("mending-repair.message", "");
+        String format = lang.get("mending-repair");
         if (format.isEmpty()) return;
 
         player.sendActionBar(TextUtil.parse(format, amount, durability, maxDurability));
