@@ -36,6 +36,7 @@ public class GedCommand implements org.bukkit.command.CommandExecutor, TabComple
             }
 
             plugin.reloadConfig();
+            lang.load(plugin.getConfig().getString("lang", "en_US"));
 
             String format = lang.get("reload");
             if (format.isEmpty()) return true;

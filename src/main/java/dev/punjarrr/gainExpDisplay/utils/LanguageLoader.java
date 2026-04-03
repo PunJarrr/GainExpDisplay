@@ -20,6 +20,8 @@ public class LanguageLoader {
         File folder = new File(plugin.getDataFolder(), "translations");
         if (!folder.exists()) folder.mkdirs();
 
+        copyBundledTranslations(folder);
+
         File langFile = new File(folder, langName + ".yml");
 
         if (!langFile.exists()) {
@@ -35,6 +37,16 @@ public class LanguageLoader {
 
         this.currentLang = langName;
         this.lang = YamlConfiguration.loadConfiguration(langFile);
+    }
+
+    private void copyBundledTranslations(File translationsDir) {
+        String[] locales = {"es_ES", "de_DE", "fr_FR", "zh_CN", "ja_JP", "th_TH"};
+        for (String locale : locales) {
+            File dest = new File(translationsDir, locale + ".yml");
+            if (!dest.exists()) {
+                plugin.saveResource("translations/" + locale + ".yml", false);
+            }
+        }
     }
 
     public String get(String key) {

@@ -1,13 +1,26 @@
-######################
-#   GainExpDisplay   #
-######################
+# Configuration version, DO NOT MODIFY THIS VALUE!
+config-version: 3.0.0
 
-# Language
+######################################################
+#                     Language                       #
+######################################################
+
+# Language setting (available: en_US, es_ES, de_DE, fr_FR, zh_CN, ja_JP, th_TH)
+# If the specified language file is missing, it will fall back to en_US.
 lang: en_US
 
-# Permissions
+# Adding custom language
+# 1. Create a new file in the translations directory
+# 2. Use en_US.yml as a template
+# 3. Modify the file as needed
+# 4. Set language to your custom language file name
 
-# When set to true, players require permissions to see the message.
+######################################################
+#                    Permissions                     #
+######################################################
+
+# When set to true, players require permissions to see any message.
+# This setting applies globally to all message types.
 # See below for a list of permissions.
 require-permission: false
 
@@ -16,7 +29,9 @@ require-permission: false
 #  gainexpdisplay.gainexp - Display text when gaining experience
 #  gainexpdisplay.mending - Display text when repairing items with Mending
 
-# Settings
+######################################################
+#                      Settings                      #
+######################################################
 
 # When set to true, players will see text when gaining exp.
 gain-xp:

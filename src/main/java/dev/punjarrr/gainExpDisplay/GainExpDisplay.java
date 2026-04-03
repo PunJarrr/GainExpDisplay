@@ -2,6 +2,7 @@ package dev.punjarrr.gainExpDisplay;
 
 import dev.punjarrr.gainExpDisplay.commands.ged.GedCommand;
 import dev.punjarrr.gainExpDisplay.listeners.Listeners;
+import dev.punjarrr.gainExpDisplay.utils.ConfigUpdater;
 import dev.punjarrr.gainExpDisplay.utils.LanguageLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,10 +12,12 @@ public final class GainExpDisplay extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new ConfigUpdater(this).migrateIfNeeded();
+
         saveDefaultConfig();
 
         lang = new LanguageLoader(this);
-        lang.load(getConfig().getString("language", "en_US"));
+        lang.load(getConfig().getString("lang", "en_US"));
 
         getServer().getPluginManager().registerEvents(new Listeners(this, lang), this);
 
