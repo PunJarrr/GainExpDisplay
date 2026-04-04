@@ -44,7 +44,7 @@ A lightweight Minecraft plugin that shows useful feedback in the action bar when
 ## ⚙️ Configuration
 
 - Permission requirement and messages toggle are fully configurable in ```config.yml```.
-- All messages are fully customizable in translation files using [MiniMessage](https://docs.papermc.io/adventure/minimessage/format/#standard-tags) format.
+- All messages are fully customizable in **translation** files using [MiniMessage](https://docs.papermc.io/adventure/minimessage/format/#standard-tags) format.
 
 ```yaml
 # Configuration version, DO NOT MODIFY THIS VALUE!
