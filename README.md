@@ -1,107 +1,112 @@
-# <p align="center">GainExpDisplay</p>
+<div align="center">
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/paper_vector.svg" alt="paper">
-  <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/purpur_vector.svg" alt="purpur">
-  <a href="https://modrinth.com/plugin/gainexpdisplay/">
-    <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/modrinth_vector.svg" alt="modrinth">
-  </a>
-  <a href="https://www.spigotmc.org/resources/gainexpdisplay-1-17-1-21-11.130682/">
-    <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/spigot_vector.svg" alt="spigot">
-  </a>
-  <a href="https://hangar.papermc.io/PunJarrr/GainExpDisplay/">
-    <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/hangar_vector.svg" alt="hangar">
-  </a>
-  <a href="https://github.com/PunJarrr/GainExpDisplay/">
-    <img src="https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/github_vector.svg" alt="github">
-  </a>
-</p>
+<img src="https://cdn.modrinth.com/data/rhuzdOze/ac7003a550e56f5ec7a61adc96ed5b5e456ab588_96.webp" alt="GainExpDisplay icon" width="96">
 
-##
+# GainExpDisplay
 
-A lightweight Minecraft plugin that shows useful feedback in the action bar whenever you gain experience or when items are repaired by **Mending**.
+**See how much XP you gain, and how much Mending repairs, right above your hotbar.**
 
-## ✨ Features
+[![Available on Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/plugin/gainexpdisplay)
+[![Available on Hangar](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/available/hangar_vector.svg)](https://hangar.papermc.io/PunJarrr/GainExpDisplay)
+[![Available on Spigot](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/available/spigot_vector.svg)](https://www.spigotmc.org/resources/130682/)
 
-- Displays XP gained directly in the action bar
-- Shows Mending repair amount and durability progress
-- Fully customizable messages using MiniMessage
-- 7 languages supported
-- Lightweight and performance-friendly
+![Supports Paper](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/paper_vector.svg)
+![Supports Purpur](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/purpur_vector.svg)
+![Supports Spigot](https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/spigot_vector.svg)
 
-<details>
-<summary>📸 Showcase</summary>
-  
-- **XP Gained**
-  
-  ![Gaining XP](https://cdn.modrinth.com/data/cached_images/e1980b2fd3375d78be801b417ac189cf309616db.png)
-  
-- **Mending Repair**
-  
-  ![Mending Repair](https://cdn.modrinth.com/data/cached_images/4d0413ecf810d9a9bedac8b0fc6b99a30e8c19c9.png)
-</details>
+<img src="https://cdn.modrinth.com/data/rhuzdOze/images/e1980b2fd3375d78be801b417ac189cf309616db.png" alt="The XP gain message in the action bar">
 
-## ⚙️ Configuration
+</div>
 
-- Permission requirement and messages toggle are fully configurable in ```config.yml```.
-- All messages are fully customizable in **translation** files using [MiniMessage](https://docs.papermc.io/adventure/minimessage/format/#standard-tags) format.
+## About
 
-```yaml
-# Configuration version, DO NOT MODIFY THIS VALUE!
-config-version: 3.0.0
+GainExpDisplay is a small server plugin. Whenever a player picks up experience, the action bar (the
+line of text above the hotbar) shows how much they gained. When Mending repairs an item, it shows how
+much was repaired and the item's durability.
 
-######################################################
-#                     Language                       #
-######################################################
+- **XP gained**, for example `Gain XP: +7`.
+- **Mending repairs**, for example `Mending Repair: +10 (1071/1561)`.
+- **Your own messages**: colours, gradients and formatting with [MiniMessage](https://docs.papermc.io/adventure/minimessage/format/).
+- **7 languages**: English, Spanish, German, French, Chinese, Japanese and Thai, plus your own.
+- **Permissions** to choose who sees the messages.
+- **Lightweight**: it only reacts to XP and Mending, nothing runs in the background.
 
-# Language setting (available: en_US, es_ES, de_DE, fr_FR, zh_CN, ja_JP, th_TH)
-# If the specified language file is missing, it will fall back to en_US.
-lang: en_US
+## Download
 
-# Adding custom language
-# 1. Create a new file in the translations directory
-# 2. Use en_US.yml as a template
-# 3. Modify the file as needed
-# 4. Set language to your custom language file name
+Get it from [Modrinth](https://modrinth.com/plugin/gainexpdisplay),
+[Hangar](https://hangar.papermc.io/PunJarrr/GainExpDisplay),
+[SpigotMC](https://www.spigotmc.org/resources/130682/) or
+[GitHub releases](https://github.com/PunJarrr/GainExpDisplay/releases).
+One jar works on every supported server and version. Put it in your server's `plugins` folder and restart.
 
-######################################################
-#                    Permissions                     #
-######################################################
+| Server | Minecraft |
+|---|---|
+| Paper | 1.17 – 26.3 |
+| Purpur | 1.17 – 26.3 |
+| Spigot | 1.17 – 26.3 |
+| Folia | 1.19.4 – 26.3 |
 
-# When set to true, players require permissions to see any message.
-# This setting applies globally to all message types.
-# See below for a list of permissions.
-require-permission: false
+Only the server needs the plugin. Players don't install anything.
 
-# Permissions for displaying messages:
-#
-#  gainexpdisplay.gainexp - Display text when gaining experience
-#  gainexpdisplay.mending - Display text when repairing items with Mending
+## Configuration
 
-######################################################
-#                      Settings                      #
-######################################################
+`plugins/GainExpDisplay/config.yml`:
 
-# When set to true, players will see text when gaining exp.
-gain-xp:
-  enabled: true
+| Option | Default | What it does |
+|---|---|---|
+| `lang` | `en_US` | Which file in `translations/` to use. |
+| `require-permission` | `false` | When `true`, players only see messages they have the permission for. |
+| `gain-xp.enabled` | `true` | Show the XP message. |
+| `mending-repair.enabled` | `true` | Show the Mending message. |
 
-# When set to true, players will see text when repairing items with Mending.
-mending-repair:
-  enabled: true
-```
+The messages themselves are in `plugins/GainExpDisplay/translations/<lang>.yml`. They use
+[MiniMessage](https://docs.papermc.io/adventure/minimessage/format/) and these placeholders:
 
-## 📚 Command & Permissions
+| Placeholder | Meaning |
+|---|---|
+| `%amount%` | XP gained, or durability repaired |
+| `%durability%` | The item's durability after the repair |
+| `%max%` | The item's maximum durability |
 
-- Command
+To add a language, copy `en_US.yml`, translate it, and set `lang` to the new file's name.
+Run `/ged reload` after changing anything.
 
-| Command           | Permission                  | Description         |
-| ----------------- | --------------------------- | ------------------- |
-| ```/ged reload``` | ```gainexpdisplay.reload``` | Reload config file. |
+## Commands and permissions
 
-- Permissions
+| Command | Permission | Default | What it does |
+|---|---|---|---|
+| `/ged reload` | `gainexpdisplay.reload` | operators | Reloads the config and messages. |
 
-| Permission                   | Description                                     | Default    |
-| ---------------------------- | ----------------------------------------------- | ---------- |
-| ```gainexpdisplay.gainxp```  | Display text when gaining experience.           | ```true``` |
-| ```gainexpdisplay.mending``` | Display text when repairing items with Mending. | ```true``` |
+| Permission | Default | What it does |
+|---|---|---|
+| `gainexpdisplay.gainexp` | everyone | See the XP message (only checked when `require-permission` is `true`). |
+| `gainexpdisplay.mending` | everyone | See the Mending message (only checked when `require-permission` is `true`). |
+
+## FAQ
+
+**Does it work on Spigot?**
+Yes, from version 2.2.0. Paper, Purpur and Folia are supported too.
+
+**I'm updating from an older version. Do I lose my settings?**
+No. The plugin updates old config files automatically, keeps your settings and messages, and saves a
+backup of the old file in `plugins/GainExpDisplay/backup/`.
+
+**Can I turn it off for some players?**
+Set `require-permission: true` and take away `gainexpdisplay.gainexp` or `gainexpdisplay.mending`
+with a permissions plugin such as [LuckPerms](https://luckperms.net/).
+
+## Contributing
+
+Bug reports, ideas and translations are welcome on the
+[issue tracker](https://github.com/PunJarrr/GainExpDisplay/issues). To build the plugin or change its
+code, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Credits
+
+GainExpDisplay bundles [Adventure and MiniMessage](https://github.com/KyoriPowered/adventure) by
+KyoriPowered (MIT License). See [credits.txt](credits.txt), which is also included in the jar.
+Badges by [devins-badges](https://github.com/intergrav/devins-badges).
+
+## License
+
+[MIT](LICENSE)

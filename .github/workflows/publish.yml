@@ -1,0 +1,48 @@
+name: Publish
+
+# Runs when a GitHub release is published: builds the jar, uploads it to Modrinth and Hangar,
+# and attaches it to the release. SpigotMC has no upload API; upload there by hand.
+# Needs repository secrets MODRINTH_TOKEN and HANGAR_API_TOKEN.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Check the release tag matches the plugin version
+        run: |
+          expected="v$(grep -E '^version=' gradle.properties | cut -d= -f2)"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "Release tag $GITHUB_REF_NAME does not match the version in gradle.properties ($expected)"; exit 1
+          fi
+
+      - name: Build and run unit tests
+        run: ./gradlew build
+
+      - name: Upload to Modrinth and Hangar
+        run: ./gradlew publishMods publishPluginPublicationToHangar
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          HANGAR_API_TOKEN: ${{ secrets.HANGAR_API_TOKEN }}
+          CHANGELOG: ${{ github.event.release.body }}
+
+      - name: Attach the jar to the GitHub release
+        run: gh release upload "$GITHUB_REF_NAME" build/libs/GainExpDisplay-*.jar --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
