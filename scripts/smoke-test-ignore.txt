@@ -1,0 +1,7 @@
+# Server log lines that are not GainExpDisplay problems (extended regex, one per line)
+# Vanilla data fixer noise on 1.19.4 - 1.21.x, harmless
+No key layers in MapLike
+# Printed (as errors) because the test servers accept the EULA with -Dcom.mojang.eula.agree
+command line EULA agreement flag
+By using this setting you are indicating your agreement to Mojang's EULA
+If you do not agree to the above EULA

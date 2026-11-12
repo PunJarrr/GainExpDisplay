@@ -1,0 +1,118 @@
+[CENTER][SIZE=6][B]GainExpDisplay[/B][/SIZE]
+
+[IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/paper_64h.png[/IMG] [IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/purpur_64h.png[/IMG] [IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy/supported/spigot_64h.png[/IMG]
+[URL='https://modrinth.com/plugin/gainexpdisplay'][IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/modrinth_64h.png[/IMG][/URL] [URL='https://hangar.papermc.io/PunJarrr/GainExpDisplay'][IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/hangar_64h.png[/IMG][/URL] [URL='https://github.com/PunJarrr/GainExpDisplay'][IMG]https://raw.githubusercontent.com/intergrav/devins-badges/0a3449fd26bf1375d2c5c26f096c8f30aa358766/assets/cozy-minimal/available/github_64h.png[/IMG][/URL]
+
+Ever wondered how much XP that orb was worth, or how much Mending just fixed?
+[B]GainExpDisplay[/B] shows it in the action bar, right above your hotbar.[/CENTER]
+
+[SIZE=5][B]✨ Features[/B][/SIZE]
+[LIST]
+[*][B]XP gained[/B] in the action bar, like [FONT=Courier New]Gain XP: +7[/FONT]
+[*][B]Mending repairs[/B] with the item's durability, like [FONT=Courier New]Mending Repair: +10 (1071/1561)[/FONT]
+[*][B]Your own messages[/B] with colours, gradients and formatting ([URL='https://docs.papermc.io/adventure/minimessage/format/']MiniMessage[/URL])
+[*][B]7 languages:[/B] English, Spanish, German, French, Chinese, Japanese and Thai, or add your own
+[*][B]Permissions[/B] to choose who sees each message
+[*][B]Spigot, Paper, Purpur and Folia[/B], Minecraft [B]1.17 – 26.3[/B], one jar for all of them
+[*][B]Lightweight:[/B] only reacts to XP and Mending, nothing runs in the background
+[/LIST]
+
+[SPOILER="📸 Showcase"]
+[B]XP Gained[/B]
+[IMG]https://cdn.modrinth.com/data/rhuzdOze/images/e1980b2fd3375d78be801b417ac189cf309616db.png[/IMG]
+
+[B]Mending Repair[/B]
+[IMG]https://cdn.modrinth.com/data/rhuzdOze/images/4d0413ecf810d9a9bedac8b0fc6b99a30e8c19c9.png[/IMG]
+[/SPOILER]
+
+[SIZE=5][B]📦 Supported Versions[/B][/SIZE]
+[LIST]
+[*][B]Spigot:[/B] 1.17 – 26.3
+[*][B]Paper:[/B] 1.17 – 26.3
+[*][B]Purpur:[/B] 1.17 – 26.3
+[*][B]Folia:[/B] 1.19.4 – 26.3
+[/LIST]
+
+[SIZE=5][B]📄 Installation[/B][/SIZE]
+[LIST=1]
+[*]Download the jar (the same file works on every server and version above)
+[*]Put it in your server's [FONT=Courier New]plugins[/FONT] folder
+[*]Restart the server
+[/LIST]
+Only the server needs it. Players don't install anything.
+
+[SIZE=5][B]⚙️ Configuration[/B][/SIZE]
+[LIST]
+[*]Turn each message on or off, and require permissions, in [FONT=Courier New]config.yml[/FONT].
+[*]Change the messages in the [B]translation files[/B] ([FONT=Courier New]translations/<lang>.yml[/FONT]) using [URL='https://docs.papermc.io/adventure/minimessage/format/']MiniMessage[/URL]. Placeholders: [FONT=Courier New]%amount%[/FONT], [FONT=Courier New]%durability%[/FONT], [FONT=Courier New]%max%[/FONT].
+[*]Run [FONT=Courier New]/ged reload[/FONT] after changing anything.
+[/LIST]
+
+[SPOILER="📝 config.yml"]
+[CODE=yaml]# Configuration version, DO NOT MODIFY THIS VALUE!
+config-version: 3.0.0
+
+######################################################
+#                     Language                       #
+######################################################
+
+# Language setting (available: en_US, es_ES, de_DE, fr_FR, zh_CN, ja_JP, th_TH)
+# If the specified language file is missing, it will fall back to en_US.
+lang: en_US
+
+# Adding custom language
+# 1. Create a new file in the translations directory
+# 2. Use en_US.yml as a template
+# 3. Modify the file as needed
+# 4. Set language to your custom language file name
+
+######################################################
+#                    Permissions                     #
+######################################################
+
+# When set to true, players require permissions to see any message.
+# This setting applies globally to all message types.
+# See below for a list of permissions.
+require-permission: false
+
+# Permissions for displaying messages:
+#
+#  gainexpdisplay.gainexp - Display text when gaining experience
+#  gainexpdisplay.mending - Display text when repairing items with Mending
+
+######################################################
+#                      Settings                      #
+######################################################
+
+# When set to true, players will see text when gaining exp.
+gain-xp:
+  enabled: true
+
+# When set to true, players will see text when repairing items with Mending.
+mending-repair:
+  enabled: true[/CODE]
+[/SPOILER]
+
+[SIZE=5][B]📚 Commands & Permissions[/B][/SIZE]
+[LIST]
+[*][FONT=Courier New]/ged reload[/FONT] ([FONT=Courier New]gainexpdisplay.reload[/FONT], operators): reload the config and messages
+[*][FONT=Courier New]gainexpdisplay.gainexp[/FONT] (everyone): see the XP message, when [FONT=Courier New]require-permission[/FONT] is [FONT=Courier New]true[/FONT]
+[*][FONT=Courier New]gainexpdisplay.mending[/FONT] (everyone): see the Mending message, when [FONT=Courier New]require-permission[/FONT] is [FONT=Courier New]true[/FONT]
+[/LIST]
+
+[SPOILER="❓ FAQ"]
+[B]Does it work on Spigot?[/B]
+Yes, from 2.2.0. Paper, Purpur and Folia work too.
+
+[B]I'm updating from an older version. Do I lose my settings?[/B]
+No. Old config files are updated automatically, your settings and messages are kept, and a backup is saved in [FONT=Courier New]plugins/GainExpDisplay/backup/[/FONT].
+
+[B]Can I hide the messages for some players?[/B]
+Set [FONT=Courier New]require-permission: true[/FONT] and take away [FONT=Courier New]gainexpdisplay.gainexp[/FONT] or [FONT=Courier New]gainexpdisplay.mending[/FONT] with a permissions plugin like LuckPerms.
+[/SPOILER]
+
+[SIZE=5][B]💬 Feedback[/B][/SIZE]
+Found a bug or have an idea? Open an issue on [URL='https://github.com/PunJarrr/GainExpDisplay/issues']GitHub[/URL].
+
+[SIZE=5][B]❤️ Credits[/B][/SIZE]
+Bundles [URL='https://github.com/KyoriPowered/adventure']Adventure and MiniMessage[/URL] by KyoriPowered (MIT License).

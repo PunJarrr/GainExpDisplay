@@ -111,3 +111,11 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Smoke-test bot dependencies (installed by scripts/smoke-test.sh)
+node_modules/
