@@ -1,9 +1,11 @@
 name: GainExpDisplay
-version: 2.1.0
+version: '${version}'
 main: dev.punjarrr.gainExpDisplay.GainExpDisplay
-api-version: 1.17
+api-version: '1.17'
+folia-supported: true
 authors: [PunJarrr]
-description: Displays XP gain and Mending repair progress directly in your action bar.
+description: '${description}'
+website: https://modrinth.com/plugin/gainexpdisplay
 commands:
   gainexpdisplay:
     description: Main command

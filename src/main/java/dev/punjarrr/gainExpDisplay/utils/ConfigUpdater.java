@@ -1,6 +1,5 @@
 package dev.punjarrr.gainExpDisplay.utils;
 
-import dev.punjarrr.gainExpDisplay.GainExpDisplay;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConfigUpdater {
@@ -22,12 +22,12 @@ public class ConfigUpdater {
     private static final String DEFAULT_NO_PERM        = "<red>You do not have permission to use this command.";
     private static final String DEFAULT_CMD_ERROR      = "<yellow>Usage: /ged reload";
 
-    private final GainExpDisplay plugin;
+    private final File dataFolder;
     private final Logger log;
 
-    public ConfigUpdater(GainExpDisplay plugin) {
-        this.plugin = plugin;
-        this.log = plugin.getLogger();
+    public ConfigUpdater(File dataFolder, Logger log) {
+        this.dataFolder = dataFolder;
+        this.log = log;
     }
 
     // -------------------------------------------------------------------------
@@ -39,7 +39,7 @@ public class ConfigUpdater {
      * Detects the installed version and migrates to 3.0.0 if needed.
      */
     public void migrateIfNeeded() {
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        File configFile = new File(dataFolder, "config.yml");
 
         if (!configFile.exists()) return;
 
@@ -63,8 +63,7 @@ public class ConfigUpdater {
             migrate(existing, detected, configFile);
             log.info("Migration complete! Please review your config.yml and translations/en_US.yml.");
         } catch (IOException e) {
-            log.severe("Migration failed: " + e.getMessage());
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Migration failed: " + e.getMessage(), e);
         }
     }
 
@@ -77,7 +76,7 @@ public class ConfigUpdater {
     private LegacyVersion detectLegacyVersion(FileConfiguration cfg) {
         // Void version: same structure as 3.0.0 but no config-version
         // Detect by checking if translations/en_US.yml already exists
-        File enUs = new File(plugin.getDataFolder(), "translations/en_US.yml");
+        File enUs = new File(dataFolder, "translations/en_US.yml");
         if (enUs.exists()) {
             return LegacyVersion.V_VOID;
         }
@@ -106,7 +105,7 @@ public class ConfigUpdater {
 
         // For void version, translations already exist — don't overwrite them
         if (version != LegacyVersion.V_VOID) {
-            File translationsDir = new File(plugin.getDataFolder(), "translations");
+            File translationsDir = new File(dataFolder, "translations");
             translationsDir.mkdirs();
             writeEnUsTranslation(new File(translationsDir, "en_US.yml"), values);
         }
@@ -259,15 +258,13 @@ public class ConfigUpdater {
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
-
-
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
 
     /** Creates a timestamped backup of the given file alongside it. */
     private void backup(File original) throws IOException {
-        File backupDir = new File(plugin.getDataFolder(), "backup");
+        File backupDir = new File(dataFolder, "backup");
         backupDir.mkdirs();
         String timestamp = String.valueOf(System.currentTimeMillis());
         File backup = new File(backupDir, "config.yml.backup-" + timestamp);
@@ -296,9 +293,4 @@ public class ConfigUpdater {
         return false;
     }
 
-    private void stampConfigVersion(File configFile, FileConfiguration existing) throws IOException {
-        // Set the version and save while preserving all other existing values
-        existing.set("config-version", CURRENT_CONFIG_VERSION);
-        existing.save(configFile);
-    }
 }

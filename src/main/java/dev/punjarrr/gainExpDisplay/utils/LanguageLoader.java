@@ -9,8 +9,9 @@ import java.io.File;
 public class LanguageLoader {
 
     private final JavaPlugin plugin;
-    private FileConfiguration lang;
-    private String currentLang;
+    // Replaced as a whole on reload; volatile so events on other threads (Folia) see the new file
+    private volatile FileConfiguration lang;
+    private volatile String currentLang;
 
     public LanguageLoader(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -40,7 +41,8 @@ public class LanguageLoader {
     }
 
     private void copyBundledTranslations(File translationsDir) {
-        String[] locales = {"es_ES", "de_DE", "fr_FR", "zh_CN", "ja_JP", "th_TH"};
+        // en_US is included so a fresh install doesn't warn "Language en_US not found"
+        String[] locales = {"en_US", "es_ES", "de_DE", "fr_FR", "zh_CN", "ja_JP", "th_TH"};
         for (String locale : locales) {
             File dest = new File(translationsDir, locale + ".yml");
             if (!dest.exists()) {
