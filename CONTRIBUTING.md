@@ -58,8 +58,11 @@ a few minutes.
 2. `/ged reload` over RCON answers "Configuration reloaded successfully."
 3. a test bot ([Mineflayer](https://github.com/PrismarineJS/mineflayer), in `tools/smoke-bot/`) joins,
    picks up XP while holding a damaged Mending pickaxe and sees `Mending Repair: +10 (1071/1561)`, then
-   picks up XP with an empty hand and sees `Gain XP: +5`
-4. the server log has no errors.
+   picks up XP with an empty hand and sees `Gain XP: +5`, then runs `/ged reload` itself
+4. the server log has no errors (harmless known lines are listed in `scripts/smoke-test-ignore.txt`).
+
+Folia 1.19.4's console (RCON) can't run commands, so there `/ged reload` is only checked through the bot,
+and the server is stopped directly instead of with `stop`.
 
 Mineflayer can't join Minecraft versions newer than it supports (currently 26.2 and 26.3). Those servers
 still get checks 1, 2 and 4, and the report says "bot skipped".

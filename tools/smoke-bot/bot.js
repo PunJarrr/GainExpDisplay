@@ -1,6 +1,7 @@
 // Joins a local test server as SmokeBot (an operator, see scripts/smoke-test.sh), then:
-//   1. holds a damaged Mending pickaxe and picks up an XP orb -> expects "Mending Repair: +10 (x/1561)"
+//   1. holds a damaged Mending pickaxe and picks up an XP orb -> expects "Mending Repair: +10 (1071/1561)"
 //   2. empties its hand and picks up another orb                -> expects "Gain XP: +5"
+//   3. runs /ged reload                                         -> expects "Configuration reloaded successfully."
 // Prints PASS/FAIL/SKIP lines. Exit code 0 = pass, 1 = fail, 3 = this Minecraft version isn't supported by Mineflayer.
 //
 //   node bot.js <port>
@@ -27,6 +28,7 @@ function mendingPickaxe (version) {
 }
 
 const actionBars = []
+const chatLines = []
 
 // Text components arrive as JSON strings (older versions) or NBT (1.20.3+). Reduce them to plain text.
 function plainText (component) {
@@ -41,12 +43,22 @@ function plainText (component) {
   return String(own) + (component.extra || []).map(plainText).join('')
 }
 
-async function waitForActionBar (predicate, timeoutMs) {
+async function waitForActionBar (predicate, timeoutMs, list = actionBars) {
   const end = Date.now() + timeoutMs
   while (Date.now() < end) {
-    const match = actionBars.find(predicate)
+    const match = list.find(predicate)
     if (match) return match
     await sleep(100)
+  }
+  return null
+}
+
+// Summons an XP orb at the bot and waits for a matching action bar; tries a second orb if the first is missed
+async function orbAndWait (predicate) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    bot.chat('/summon minecraft:experience_orb ~ ~ ~ {Value:5}')
+    const match = await waitForActionBar(predicate, 8000)
+    if (match) return match
   }
   return null
 }
@@ -63,9 +75,11 @@ const bot = mineflayer.createBot({ host: '127.0.0.1', port, username: 'SmokeBot'
 // Read the packets directly: Mineflayer's own actionBar event misses some versions' formats
 bot._client.on('action_bar', data => actionBars.push(plainText(data.text)))
 bot._client.on('system_chat', data => {
-  if (data.isActionBar || data.overlay || data.type === 2) actionBars.push(plainText(data.content || data.formattedMessage))
+  const text = plainText(data.content || data.formattedMessage)
+  if (data.isActionBar || data.overlay || data.type === 2) actionBars.push(text)
+  else chatLines.push(text)
 })
-bot._client.on('chat', data => { if (data.position === 2) actionBars.push(plainText(data.message)) })
+bot._client.on('chat', data => (data.position === 2 ? actionBars : chatLines).push(plainText(data.message)))
 bot.on('kicked', reason => finish(1, `FAIL kicked: ${JSON.stringify(reason)}`))
 bot.on('error', error => {
   if (/unsupported|not supported|No data available/i.test(String(error && error.message))) {
@@ -78,26 +92,32 @@ bot.once('spawn', async () => {
   try {
     console.log(`joined as SmokeBot, Minecraft ${bot.version}`)
     await sleep(3000) // let the world settle and the op status arrive
+    // Stand on the ground first: an orb summoned while falling can be missed
+    for (let i = 0; i < 100 && !bot.entity.onGround; i++) await sleep(100)
 
     bot.chat('/gamemode survival')
-    bot.chat(`/item replace entity @s weapon.mainhand with ${mendingPickaxe(bot.version)}`)
+    bot.chat('/clear @s')
+    bot.chat(`/give @s ${mendingPickaxe(bot.version)}`) // lands in the selected hotbar slot
     await sleep(1500)
-    bot.chat('/summon minecraft:experience_orb ~ ~ ~ {Value:5}')
-    const mending = await waitForActionBar(text => text.startsWith('Mending Repair:'), 15000)
+    const mending = await orbAndWait(text => text.startsWith('Mending Repair:'))
     if (!mending) return finish(1, `FAIL no Mending action bar (saw: ${JSON.stringify(actionBars)})`)
     if (!/^Mending Repair: \+\d+ \(\d+\/1561\)$/.test(mending)) return finish(1, `FAIL unexpected Mending text: ${mending}`)
     console.log(`ok   ${mending}`)
 
-    bot.chat('/item replace entity @s weapon.mainhand with minecraft:air')
+    bot.chat('/clear @s')
     await sleep(1500)
-    bot.chat('/summon minecraft:experience_orb ~ ~ ~ {Value:5}')
-    const gain = await waitForActionBar(text => text.startsWith('Gain XP:'), 15000)
+    const gain = await orbAndWait(text => text.startsWith('Gain XP:'))
     if (!gain) return finish(1, `FAIL no Gain XP action bar (saw: ${JSON.stringify(actionBars)})`)
     if (gain !== 'Gain XP: +5') return finish(1, `FAIL unexpected Gain XP text: ${gain}`)
     console.log(`ok   ${gain}`)
 
+    bot.chat('/ged reload')
+    const reload = await waitForActionBar(text => text.includes('Configuration reloaded successfully'), 8000, chatLines)
+    if (!reload) return finish(1, `FAIL /ged reload gave no reply (saw: ${JSON.stringify(chatLines.slice(-5))})`)
+    console.log(`ok   ${reload}`)
+
     bot.quit()
-    finish(0, 'PASS action bar messages arrived')
+    finish(0, 'PASS action bar messages and /ged reload work')
   } catch (error) {
     finish(1, `FAIL ${error.stack || error}`)
   }

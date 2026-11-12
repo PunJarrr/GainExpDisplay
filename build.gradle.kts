@@ -9,6 +9,9 @@ plugins {
     id("com.gradleup.shadow") version "9.6.1"
     // run-paper 3.1.0 needs Gradle 9.7+ (see gradle/wrapper/gradle-wrapper.properties)
     id("xyz.jpenilla.run-paper") version "3.1.0"
+    // Uploads to Modrinth, and to Hangar (see "Publishing" below)
+    id("me.modmuss50.mod-publish-plugin") version "2.2.1"
+    id("io.papermc.hangar-publish-plugin") version "0.1.4"
 }
 
 repositories {
@@ -59,23 +62,70 @@ tasks {
         filesMatching("plugin.yml") {
             expand(props)
         }
-        from(rootProject.file("LICENSE"))
+        from(rootProject.file("LICENSE"), rootProject.file("credits.txt"))
     }
 
     jar {
-        // The plain jar is not usable on a server (MiniMessage is missing); only shadowJar is published.
+        // The plain jar doesn't work on a server (MiniMessage is missing), so keep it out of build/libs.
+        // Only the shadow jar is tested and published.
         archiveClassifier = "plain"
+        destinationDirectory = layout.buildDirectory.dir("plain-jar")
     }
 
     shadowJar {
         archiveClassifier = ""
         relocate("net.kyori", "dev.punjarrr.gainExpDisplay.libs.kyori")
         exclude("META-INF/maven/**", "META-INF/versions/*/module-info.class", "module-info.class")
+        // Merge Adventure's service files instead of dropping duplicates
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
         mergeServiceFiles()
+        filesNotMatching("META-INF/services/**") { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
     }
 
     assemble {
         dependsOn(shadowJar)
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Publishing: the Publish GitHub workflow runs these when a release is published.
+//   MODRINTH_TOKEN and HANGAR_API_TOKEN come from repository secrets; CHANGELOG is the release text.
+//   Without MODRINTH_TOKEN, `./gradlew publishMods` only checks the settings (dry run).
+// ---------------------------------------------------------------------------
+val mcVersions = providers.gradleProperty("mc_versions").get().split(',').map { it.trim() }.filter { it.isNotEmpty() }
+val releaseChangelog = providers.environmentVariable("CHANGELOG")
+    .orElse("See https://github.com/PunJarrr/GainExpDisplay/blob/master/CHANGELOG.md")
+
+publishMods {
+    val modrinthToken = providers.environmentVariable("MODRINTH_TOKEN")
+    file = tasks.shadowJar.flatMap { it.archiveFile }
+    displayName = "GainExpDisplay ${project.version}"
+    version = project.version.toString()
+    changelog = releaseChangelog
+    type = STABLE
+    modLoaders.addAll("paper", "purpur", "folia", "spigot")
+    dryRun = modrinthToken.map { false }.orElse(true)
+
+    modrinth {
+        projectId = providers.gradleProperty("modrinth_id")
+        accessToken = modrinthToken
+        minecraftVersions.addAll(mcVersions)
+    }
+}
+
+hangarPublish {
+    publications.register("plugin") {
+        version = project.version.toString()
+        id = providers.gradleProperty("hangar_id").map { it.substringAfter('/') }
+        channel = "Release"
+        changelog = releaseChangelog
+        apiKey = providers.environmentVariable("HANGAR_API_TOKEN")
+        platforms {
+            paper {
+                jar = tasks.shadowJar.flatMap { it.archiveFile }
+                platformVersions = mcVersions
+            }
+        }
     }
 }
 
@@ -181,6 +231,8 @@ testServers.forEach { server ->
             else -> {
                 version = server.minecraftVersion
                 serverJar(serverJarFile!!)
+                // Spigot doesn't understand Paper's -add-plugin option; copy the jar into plugins/ instead
+                if (server.platform == "spigot") legacyPluginLoading()
             }
         }
         args("nogui")
