@@ -1,0 +1,10 @@
+{
+  "name": "gainexpdisplay-smoke-bot",
+  "private": true,
+  "description": "Headless player for scripts/smoke-test.sh: picks up XP and checks the action bar.",
+  "main": "bot.js",
+  "dependencies": {
+    "mineflayer": "4.39.0",
+    "prismarine-nbt": "2.8.0"
+  }
+}

@@ -1,0 +1,1 @@
+# Server log lines that are not GainExpDisplay problems (extended regex, one per line)
