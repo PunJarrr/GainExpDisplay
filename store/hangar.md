@@ -28,6 +28,7 @@ Ever wondered how much XP that orb was worth, or how much Mending just fixed? **
 - **Mending repairs** with the item's durability, like `Mending Repair: +10 (1071/1561)`
 - **Your own messages** with colours, gradients and formatting ([MiniMessage](https://docs.papermc.io/adventure/minimessage/format/))
 - **7 languages:** English, Spanish, German, French, Chinese, Japanese and Thai, or add your own
+- **Each player's own language:** players see the messages in the language their game is set to
 - **Permissions** to choose who sees each message
 - **Paper, Purpur, Spigot and Folia**, Minecraft **1.17 – 26.3**, one jar for all of them
 - **Lightweight:** only reacts to XP and Mending, nothing runs in the background
@@ -72,7 +73,7 @@ Only the server needs it. Players don't install anything.
 
 ```yaml
 # Configuration version, DO NOT MODIFY THIS VALUE!
-config-version: 3.0.0
+config-version: 3.1.0
 
 ######################################################
 #                     Language                       #
@@ -87,6 +88,11 @@ lang: en_US
 # 2. Use en_US.yml as a template
 # 3. Modify the file as needed
 # 4. Set language to your custom language file name
+
+# When set to true, each player sees the messages in their own Minecraft language
+# (for example th_TH when their game is set to Thai), if there is a translation
+# file for it. Other players, and the console, use the language set above.
+per-player-language: true
 
 ######################################################
 #                    Permissions                     #
@@ -135,6 +141,9 @@ Yes, from 2.2.0. Paper, Purpur and Folia work too.
 
 **I'm updating from an older version. Do I lose my settings?**
 No. Old config files are updated automatically, your settings and messages are kept, and a backup is saved in `plugins/GainExpDisplay/backup/`.
+
+**Can players see the messages in their own language?**
+Yes, from 2.3.0. With `per-player-language: true` (the default for new installs), each player sees the translation for their Minecraft language. Servers updating from an older version have the option added switched off; turn it on in `config.yml` and run `/ged reload`.
 
 **Can I hide the messages for some players?**
 Set `require-permission: true` and take away `gainexpdisplay.gainexp` or `gainexpdisplay.mending` with a permissions plugin like LuckPerms.

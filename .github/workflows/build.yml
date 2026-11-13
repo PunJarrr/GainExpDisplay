@@ -62,12 +62,15 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      # Server jars that run-paper doesn't download (Purpur, and Spigot built with BuildTools)
+      # Finished server jars that run-paper doesn't download (Purpur, and Spigot built with BuildTools).
+      # BuildTools' working folder is left out: restored without its Maven files, it breaks the next build.
       - uses: actions/cache@v4
         with:
-          path: run/_servers
-          key: servers-${{ matrix.server }}-${{ hashFiles('build.gradle.kts') }}
-          restore-keys: servers-${{ matrix.server }}-
+          path: |
+            run/_servers/*.jar
+            run/_servers/spigot-*/*.jar
+          key: server-jars-${{ matrix.server }}-${{ hashFiles('build.gradle.kts') }}
+          restore-keys: server-jars-${{ matrix.server }}-
 
       - name: Smoke test ${{ matrix.server }}
         run: scripts/smoke-test.sh ${{ matrix.server }}

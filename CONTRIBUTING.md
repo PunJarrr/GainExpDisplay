@@ -58,7 +58,8 @@ a few minutes.
 2. `/ged reload` over RCON answers "Configuration reloaded successfully."
 3. a test bot ([Mineflayer](https://github.com/PrismarineJS/mineflayer), in `tools/smoke-bot/`) joins,
    picks up XP while holding a damaged Mending pickaxe and sees `Mending Repair: +10 (1071/1561)`, then
-   picks up XP with an empty hand and sees `Gain XP: +5`, then runs `/ged reload` itself
+   picks up XP with an empty hand and sees `Gain XP: +5`, then runs `/ged reload` itself, then switches its
+   game language to Thai and sees `ได้รับ XP: +5`
 4. the server log has no errors (harmless known lines are listed in `scripts/smoke-test-ignore.txt`).
 
 Folia 1.19.4's console (RCON) can't run commands, so there `/ged reload` is only checked through the bot,
@@ -89,7 +90,10 @@ The smoke test can't see colours or check every setting. Before a release, join 
 - [ ] Picking up XP shows `Gain XP: +<amount>` in green and yellow.
 - [ ] Holding a damaged Mending item and picking up XP shows `Mending Repair: +<amount> (<durability>/<max>)`,
       and the durability never goes above the maximum.
-- [ ] Set `lang: th_TH` (or another language) in `config.yml`, run `/ged reload`: the messages change language.
+- [ ] Set `lang: th_TH` (or another language) and `per-player-language: false` in `config.yml`, run
+      `/ged reload`: the messages change language.
+- [ ] Set `per-player-language: true`, run `/ged reload`, then change your game language in Options →
+      Language: the next message is in that language.
 - [ ] Set `require-permission: true`, run `/ged reload`, then
       `/lp user <you> permission set gainexpdisplay.mending false` (with LuckPerms):
       the Mending message stops but the XP message still shows.

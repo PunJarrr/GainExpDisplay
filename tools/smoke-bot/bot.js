@@ -2,6 +2,8 @@
 //   1. holds a damaged Mending pickaxe and picks up an XP orb -> expects "Mending Repair: +10 (1071/1561)"
 //   2. empties its hand and picks up another orb                -> expects "Gain XP: +5"
 //   3. runs /ged reload                                         -> expects "Configuration reloaded successfully."
+//   4. switches its game language to Thai, picks up an orb      -> expects the Thai message "ได้รับ XP: +5"
+//      (per-player-language is on in a fresh config)
 // Prints PASS/FAIL/SKIP lines. Exit code 0 = pass, 1 = fail, 3 = this Minecraft version isn't supported by Mineflayer.
 //
 //   node bot.js <port>
@@ -116,8 +118,16 @@ bot.once('spawn', async () => {
     if (!reload) return finish(1, `FAIL /ged reload gave no reply (saw: ${JSON.stringify(chatLines.slice(-5))})`)
     console.log(`ok   ${reload}`)
 
+    // Like a player changing their language in the options menu: no relog
+    bot.setSettings({ locale: 'th_th' })
+    await sleep(1500)
+    const thai = await orbAndWait(text => text.startsWith('ได้รับ XP:'))
+    if (!thai) return finish(1, `FAIL no Thai action bar after switching language (saw: ${JSON.stringify(actionBars.slice(-3))})`)
+    if (thai !== 'ได้รับ XP: +5') return finish(1, `FAIL unexpected Thai text: ${thai}`)
+    console.log(`ok   ${thai}`)
+
     bot.quit()
-    finish(0, 'PASS action bar messages and /ged reload work')
+    finish(0, 'PASS action bar messages, /ged reload and per-player language work')
   } catch (error) {
     finish(1, `FAIL ${error.stack || error}`)
   }

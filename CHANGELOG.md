@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.3.0
+
+### Added
+- Messages in each player's own language. With the new `per-player-language` option, players see the
+  translation that matches their Minecraft language setting (for example Thai when their game is set to
+  ภาษาไทย). A player whose language has no translation, and the console, see the language set in `lang`.
+  Changing the game language takes effect right away, without rejoining.
+
+### Changed
+- `per-player-language` is on for new installs. Servers updating from 2.2.0 or older get the option
+  added to their `config.yml` switched off, so nothing changes until they turn it on.
+
 ## 2.2.0
 
 ### Added

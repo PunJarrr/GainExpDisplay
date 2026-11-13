@@ -12,6 +12,7 @@ Ever wondered how much XP that orb was worth, or how much Mending just fixed?
 [*][B]Mending repairs[/B] with the item's durability, like [FONT=Courier New]Mending Repair: +10 (1071/1561)[/FONT]
 [*][B]Your own messages[/B] with colours, gradients and formatting ([URL='https://docs.papermc.io/adventure/minimessage/format/']MiniMessage[/URL])
 [*][B]7 languages:[/B] English, Spanish, German, French, Chinese, Japanese and Thai, or add your own
+[*][B]Each player's own language:[/B] players see the messages in the language their game is set to
 [*][B]Permissions[/B] to choose who sees each message
 [*][B]Spigot, Paper, Purpur and Folia[/B], Minecraft [B]1.17 – 26.3[/B], one jar for all of them
 [*][B]Lightweight:[/B] only reacts to XP and Mending, nothing runs in the background
@@ -50,7 +51,7 @@ Only the server needs it. Players don't install anything.
 
 [SPOILER="📝 config.yml"]
 [CODE=yaml]# Configuration version, DO NOT MODIFY THIS VALUE!
-config-version: 3.0.0
+config-version: 3.1.0
 
 ######################################################
 #                     Language                       #
@@ -65,6 +66,11 @@ lang: en_US
 # 2. Use en_US.yml as a template
 # 3. Modify the file as needed
 # 4. Set language to your custom language file name
+
+# When set to true, each player sees the messages in their own Minecraft language
+# (for example th_TH when their game is set to Thai), if there is a translation
+# file for it. Other players, and the console, use the language set above.
+per-player-language: true
 
 ######################################################
 #                    Permissions                     #
@@ -106,6 +112,9 @@ Yes, from 2.2.0. Paper, Purpur and Folia work too.
 
 [B]I'm updating from an older version. Do I lose my settings?[/B]
 No. Old config files are updated automatically, your settings and messages are kept, and a backup is saved in [FONT=Courier New]plugins/GainExpDisplay/backup/[/FONT].
+
+[B]Can players see the messages in their own language?[/B]
+Yes, from 2.3.0. With [FONT=Courier New]per-player-language: true[/FONT] (the default for new installs), each player sees the translation for their Minecraft language. Servers updating from an older version have the option added switched off; turn it on in [FONT=Courier New]config.yml[/FONT] and run [FONT=Courier New]/ged reload[/FONT].
 
 [B]Can I hide the messages for some players?[/B]
 Set [FONT=Courier New]require-permission: true[/FONT] and take away [FONT=Courier New]gainexpdisplay.gainexp[/FONT] or [FONT=Courier New]gainexpdisplay.mending[/FONT] with a permissions plugin like LuckPerms.
