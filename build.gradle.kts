@@ -162,6 +162,11 @@ abstract class DownloadFile : DefaultTask() {
     @get:Input abstract val url: Property<String>
     @get:OutputFile abstract val destination: RegularFileProperty
 
+    init {
+        // Checked by file, not by Gradle's history, so a jar restored from the CI cache is used as is
+        onlyIf("the file isn't downloaded yet") { !destination.get().asFile.exists() }
+    }
+
     @TaskAction
     fun download() {
         val target = destination.get().asFile.toPath()
@@ -203,7 +208,10 @@ testServers.forEach { server ->
                 description = "Builds Spigot ${server.minecraftVersion} with BuildTools (takes a few minutes)."
                 val buildTools = downloadBuildTools.flatMap { it.destination }
                 inputs.file(buildTools)
-                outputs.file(outDir.file("spigot-${server.minecraftVersion}.jar"))
+                val spigotJar = outDir.file("spigot-${server.minecraftVersion}.jar")
+                outputs.file(spigotJar)
+                // Built once; a jar restored from the CI cache is used as is. Delete it to build again.
+                onlyIf("Spigot isn't built yet") { !spigotJar.asFile.exists() }
                 classpath(buildTools)
                 javaLauncher = serverJava
                 workingDir = serverCache.dir("buildtools").asFile
