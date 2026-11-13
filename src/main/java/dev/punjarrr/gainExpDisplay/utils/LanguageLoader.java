@@ -42,7 +42,7 @@ public class LanguageLoader {
 
     private void copyBundledTranslations(File translationsDir) {
         // en_US is included so a fresh install doesn't warn "Language en_US not found"
-        String[] locales = {"en_US", "es_ES", "de_DE", "fr_FR", "zh_CN", "ja_JP", "th_TH"};
+        String[] locales = {"en_US", "es_ES", "de_DE", "fr_FR", "zh_CN", "ja_JP", "th_TH", "ru_RU"};
         for (String locale : locales) {
             File dest = new File(translationsDir, locale + ".yml");
             if (!dest.exists()) {
