@@ -1,5 +1,5 @@
 # Configuration version, DO NOT MODIFY THIS VALUE!
-config-version: 3.0.0
+config-version: 3.1.0
 
 ######################################################
 #                     Language                       #
@@ -14,6 +14,11 @@ lang: en_US
 # 2. Use en_US.yml as a template
 # 3. Modify the file as needed
 # 4. Set language to your custom language file name
+
+# When set to true, each player sees the messages in their own Minecraft language
+# (for example th_TH when their game is set to Thai), if there is a translation
+# file for it. Other players, and the console, use the language set above.
+per-player-language: true
 
 ######################################################
 #                    Permissions                     #

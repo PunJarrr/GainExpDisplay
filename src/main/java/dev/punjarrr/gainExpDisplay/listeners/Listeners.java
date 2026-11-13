@@ -42,7 +42,7 @@ public class Listeners implements Listener {
         int amount = e.getAmount();
         if (amount <= 0) return;
 
-        String format = lang.get("gain-xp");
+        String format = lang.get("gain-xp", localeOf(player, settings));
         if (format.isEmpty()) return;
 
         messenger.sendActionBar(player, TextUtil.parse(format, amount));
@@ -66,9 +66,14 @@ public class Listeners implements Listener {
         if (maxDurability <= 0) return;
         int durability = Durability.afterRepair(maxDurability, damageable.getDamage(), amount);
 
-        String format = lang.get("mending-repair");
+        String format = lang.get("mending-repair", localeOf(player, settings));
         if (format.isEmpty()) return;
 
         messenger.sendActionBar(player, TextUtil.parse(format, amount, durability, maxDurability));
+    }
+
+    /** The player's Minecraft language when per-player-language is on, otherwise null (the server's language). */
+    static String localeOf(Player player, Settings settings) {
+        return settings.perPlayerLanguage() ? player.getLocale() : null;
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -43,7 +44,9 @@ public class GedCommand implements CommandExecutor, TabCompleter {
     }
 
     private void send(CommandSender sender, String key) {
-        String format = lang.get(key);
+        // Players get their own language when per-player-language is on; the console gets the server's
+        String locale = sender instanceof Player player && plugin.settings().perPlayerLanguage() ? player.getLocale() : null;
+        String format = lang.get(key, locale);
         if (!format.isEmpty()) messenger.sendMessage(sender, TextUtil.parse(format));
     }
 

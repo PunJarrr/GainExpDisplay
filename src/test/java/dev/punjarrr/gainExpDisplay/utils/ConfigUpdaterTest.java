@@ -35,7 +35,8 @@ class ConfigUpdaterTest {
         new ConfigUpdater(dir.toFile(), LOG).migrateIfNeeded();
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(dir.resolve("config.yml").toFile());
-        assertEquals("3.0.0", config.getString("config-version"));
+        assertEquals("3.1.0", config.getString("config-version"));
+        assertFalse(config.getBoolean("per-player-language"), "existing servers keep one language");
         assertEquals("th_TH", config.getString("lang"));
         assertTrue(config.getBoolean("require-permission"));
         assertFalse(config.getBoolean("gain-xp.enabled"));
@@ -61,12 +62,47 @@ class ConfigUpdaterTest {
 
     @Test
     void leavesACurrentConfigAlone(@TempDir Path dir) throws Exception {
-        String current = "config-version: 3.0.0\nlang: de_DE\n";
+        String current = "config-version: 3.1.0\nlang: de_DE\n";
         Files.writeString(dir.resolve("config.yml"), current);
 
         new ConfigUpdater(dir.toFile(), LOG).migrateIfNeeded();
 
         assertEquals(current, Files.readString(dir.resolve("config.yml")));
         assertFalse(dir.resolve("backup").toFile().exists());
+    }
+
+    @Test
+    void adds_per_player_language_switchedOff_to_a_2_2_0_config(@TempDir Path dir) throws Exception {
+        Files.createDirectories(dir.resolve("translations"));
+        String customEnglish = "gain-xp: \"<red>my own text\"\n";
+        Files.writeString(dir.resolve("translations/en_US.yml"), customEnglish);
+        Files.writeString(dir.resolve("config.yml"), String.join("\n",
+                "config-version: 3.0.0",
+                "lang: fr_FR",
+                "require-permission: true",
+                "gain-xp:",
+                "  enabled: true",
+                "mending-repair:",
+                "  enabled: false",
+                ""));
+
+        new ConfigUpdater(dir.toFile(), LOG).migrateIfNeeded();
+
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(dir.resolve("config.yml").toFile());
+        assertEquals("3.1.0", config.getString("config-version"));
+        assertFalse(config.getBoolean("per-player-language"));
+        assertEquals("fr_FR", config.getString("lang"));
+        assertTrue(config.getBoolean("require-permission"));
+        assertFalse(config.getBoolean("mending-repair.enabled"));
+        assertEquals(customEnglish, Files.readString(dir.resolve("translations/en_US.yml")), "translations are kept");
+    }
+
+    @Test
+    void theUpdatersConfigMatchesTheBundledConfig() throws Exception {
+        ConfigUpdater.MigratedValues defaults = new ConfigUpdater.MigratedValues();
+        defaults.perPlayerLanguage = true; // new installs
+        try (var in = getClass().getResourceAsStream("/config.yml")) {
+            assertEquals(new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8), ConfigUpdater.render(defaults));
+        }
     }
 }

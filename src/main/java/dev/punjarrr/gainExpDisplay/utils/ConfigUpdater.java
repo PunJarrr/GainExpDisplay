@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class ConfigUpdater {
 
-    private static final String CURRENT_CONFIG_VERSION = "3.0.0";
+    private static final String CURRENT_CONFIG_VERSION = "3.1.0";
 
     // Default 3.0.0 messages to fall back on if a key isn't found in legacy config
     private static final String DEFAULT_GAIN_XP       = "<green><bold>Gain XP:</bold> <yellow><bold>+%amount%</bold>";
@@ -48,6 +48,17 @@ public class ConfigUpdater {
 
         if (CURRENT_CONFIG_VERSION.equals(installedVersion)) return;
 
+        if ("3.0.0".equals(installedVersion)) {
+            // 2.2.0 and older: add per-player-language, switched off so every player keeps the same language
+            log.info("Updating config.yml to " + CURRENT_CONFIG_VERSION + ": added per-player-language (off).");
+            try {
+                migrate(existing, LegacyVersion.V3_0_0, configFile);
+            } catch (IOException e) {
+                log.log(Level.SEVERE, "Config update failed: " + e.getMessage(), e);
+            }
+            return;
+        }
+
         if (installedVersion != null) {
             if (isNewerThan(installedVersion, CURRENT_CONFIG_VERSION)) {
                 log.warning("Config version '" + installedVersion + "' is newer than expected. Skipping migration.");
@@ -57,7 +68,7 @@ public class ConfigUpdater {
 
         // No config-version → legacy. Fingerprint which one.
         LegacyVersion detected = detectLegacyVersion(existing);
-        log.info("Detected legacy config version: " + detected + ". Migrating to 3.0.0…");
+        log.info("Detected legacy config version: " + detected + ". Migrating to " + CURRENT_CONFIG_VERSION + "…");
 
         try {
             migrate(existing, detected, configFile);
@@ -71,7 +82,7 @@ public class ConfigUpdater {
     // Detection
     // -------------------------------------------------------------------------
 
-    private enum LegacyVersion { V1_0_0, V2_0_0, V2_1_0, V_VOID }
+    private enum LegacyVersion { V1_0_0, V2_0_0, V2_1_0, V_VOID, V3_0_0 }
 
     private LegacyVersion detectLegacyVersion(FileConfiguration cfg) {
         // Void version: same structure as 3.0.0 but no config-version
@@ -103,8 +114,8 @@ public class ConfigUpdater {
         MigratedValues values = extract(legacy, version);
         writeNewConfig(configFile, values);
 
-        // For void version, translations already exist — don't overwrite them
-        if (version != LegacyVersion.V_VOID) {
+        // Void and 3.0.0 configs already have translation files; don't overwrite them
+        if (version != LegacyVersion.V_VOID && version != LegacyVersion.V3_0_0) {
             File translationsDir = new File(dataFolder, "translations");
             translationsDir.mkdirs();
             writeEnUsTranslation(new File(translationsDir, "en_US.yml"), values);
@@ -116,7 +127,8 @@ public class ConfigUpdater {
     // -------------------------------------------------------------------------
 
     /** Holds every user-configured value we want to preserve across versions. */
-    private static class MigratedValues {
+    static class MigratedValues {
+        boolean perPlayerLanguage    = false; // existing servers keep one language until they turn it on
         boolean gainXpEnabled        = true;
         boolean mendingRepairEnabled = true;
         String lang          = "en_US"; // preserve user's language setting
@@ -170,7 +182,8 @@ public class ConfigUpdater {
                 break;
             }
 
-            case V_VOID: {
+            case V_VOID:
+            case V3_0_0: {
                 // Same structure as 3.0.0 — just read values directly
                 v.gainXpEnabled        = cfg.getBoolean("gain-xp.enabled",       true);
                 v.mendingRepairEnabled = cfg.getBoolean("mending-repair.enabled", true);
@@ -187,7 +200,12 @@ public class ConfigUpdater {
     // -------------------------------------------------------------------------
 
     private void writeNewConfig(File configFile, MigratedValues v) throws IOException {
-        String content =
+        Files.writeString(configFile.toPath(), render(v), StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    /** config.yml with these values. With the defaults and per-player-language on, it equals the bundled config.yml. */
+    static String render(MigratedValues v) {
+        return
                 "# Configuration version, DO NOT MODIFY THIS VALUE!\n" +
                         "config-version: " + CURRENT_CONFIG_VERSION + "\n" +
                         "\n" +
@@ -204,6 +222,11 @@ public class ConfigUpdater {
                         "# 2. Use en_US.yml as a template\n" +
                         "# 3. Modify the file as needed\n" +
                         "# 4. Set language to your custom language file name\n" +
+                        "\n" +
+                        "# When set to true, each player sees the messages in their own Minecraft language\n" +
+                        "# (for example th_TH when their game is set to Thai), if there is a translation\n" +
+                        "# file for it. Other players, and the console, use the language set above.\n" +
+                        "per-player-language: " + v.perPlayerLanguage + "\n" +
                         "\n" +
                         "######################################################\n" +
                         "#                    Permissions                     #\n" +
@@ -230,8 +253,6 @@ public class ConfigUpdater {
                         "# When set to true, players will see text when repairing items with Mending.\n" +
                         "mending-repair:\n" +
                         "  enabled: " + v.mendingRepairEnabled + "\n";
-
-        Files.writeString(configFile.toPath(), content, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     private void writeEnUsTranslation(File file, MigratedValues v) throws IOException {
